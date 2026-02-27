@@ -22,7 +22,7 @@ from my_elektronn3.custom.perlin_noise import *
 from my_elektronn3.custom.curvature import *
 from my_elektronn3.data import transforms
 
-from utils import load_config, max_down_sample, nearest_factor_of_two
+from utils import load_config, max_down_sample, nearest_power_of_two
 
 import argparse
 
@@ -31,6 +31,8 @@ parser.add_argument('--save-path', type=str, default='synthetic_train/',
                     help='Output Directory')
 parser.add_argument('--N', type=int, default=100, 
                     help='Number of Total Generated Samples.')
+parser.add_argument('--dataset-id', type=str, required=True,
+                    help='Short identifier for the dataset (e.g., H157). Used for logging, config selection, etc.')
 parser.add_argument('--global-config', type=str, default=None,
                     help='Config. File for Sampler')
 args = parser.parse_args()
@@ -76,7 +78,6 @@ assert args.save_path[-1] == '/'
 
 os.makedirs(args.save_path, exist_ok=True)
 
-config = load_config(args.config)
 if args.global_config is None:
     global_params = load_config(f'config/{args.dataset_id}/global_parameters.yaml')
 else:
@@ -84,7 +85,7 @@ else:
 
 # Parameters
 sampling = global_params['SAMPLING']
-aniso_factor = nearest_factor_of_two(sampling[0]/sampling[1])
+aniso_factor = nearest_power_of_two(sampling[0]/sampling[1])
 
 zres, xres, yres = 128, 160, 208
 

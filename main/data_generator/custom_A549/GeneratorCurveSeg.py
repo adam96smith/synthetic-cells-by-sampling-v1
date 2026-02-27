@@ -26,7 +26,7 @@ import my_elektronn3
 from my_elektronn3.custom.curvature import *
 import re
 
-from utils import load_config
+from utils import load_config, nearest_power_of_two
 
 import argparse
 
@@ -49,7 +49,8 @@ else:
     global_params = load_config(args.global_config)
 
 # Parameters
-aniso_factor = global_params['ANISOTROPIC_FACTOR']
+sampling = global_params['SAMPLING']
+aniso_factor = nearest_power_of_two(sampling[0]/sampling[1])
 
 for i in tqdm(range(len(mask_files)), desc='Calculating Curvature in Synthetic Masks'):
 

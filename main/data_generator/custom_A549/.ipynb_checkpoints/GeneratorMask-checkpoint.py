@@ -22,7 +22,7 @@ from my_elektronn3.custom.perlin_noise import *
 from my_elektronn3.custom.curvature import *
 from my_elektronn3.data import transforms
 
-from utils import load_config, max_down_sample, nearest_factor_of_two
+from utils import load_config, max_down_sample, nearest_power_of_two
 
 import argparse
 
@@ -84,7 +84,7 @@ else:
 
 # Parameters
 sampling = global_params['SAMPLING']
-aniso_factor = nearest_factor_of_two(sampling[0]/sampling[1])
+aniso_factor = nearest_power_of_two(sampling[0]/sampling[1])
 
 zres, xres, yres = 128, 160, 208
 

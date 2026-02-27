@@ -101,10 +101,10 @@ for n in tqdm(range(N), desc='Sampling fluorescence'):
         if normalise:
             image = (image-image.mean())/image.std()
 
-        # # ensure labelling 0, 1, 2 .. with no gaps!
-        # labelled_mask = np.zeros_like(mask)
-        # for i, lab in enumerate(np.unique(mask)):
-        #     labelled_mask[mask==lab] = i
+        # ensure labelling 0, 1, 2 .. with no gaps!
+        labelled_mask = np.zeros_like(mask)
+        for i, lab in enumerate(np.unique(mask)):
+            labelled_mask[mask==lab] = i
 
         # sampler file name
         save_path = f'data_generator/sampled_data/data_{args.dataset_id}/{cell}_t{t_lab}.pkl'
@@ -140,10 +140,10 @@ for n in tqdm(range(N), desc='Sampling fluorescence'):
         if normalise:
             image = (image-image.mean())/image.std()
 
-        # # ensure labelling 0, 1, 2 .. with no gaps!
-        # labelled_mask = np.zeros_like(mask)
-        # for i, lab in enumerate(np.unique(mask)):
-        #     labelled_mask[mask==lab] = i
+        # ensure labelling 0, 1, 2 .. with no gaps!
+        labelled_mask = np.zeros_like(mask)
+        for i, lab in enumerate(np.unique(mask)):
+            labelled_mask[mask==lab] = i
 
 
         # sampler file name
