@@ -1,3 +1,7 @@
 Fluo-C3DH-A549-train/*
 !Fluo-C3DH-A549-train/.gitkeep
 !Fluo-C3DH-A549/.gitkeep
+main/synthetic_data/*
+!main/synthetic_data/.gitkeep
+*/.ipynb_checkpoints
+*/__py_cache__
