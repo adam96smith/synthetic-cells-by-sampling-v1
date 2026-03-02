@@ -1,9 +1,3 @@
-Below is a **clean, professional README template** you can directly adapt for your GitHub repo. It is structured to clearly explain the **workflow**, **execution order**, **folder structure**, and provides **dedicated space** to briefly describe each script **and** how configuration parameters affect outputs.
-
-You can copy-paste this into `README.md` and fill in the sections as your project matures.
-
----
-
 # Synthetic Imaging Data Pipeline for Segmentation Training
 
 This repository provides a complete pipeline for generating **synthetic imaging data**, preparing **training datasets**, training a **segmentation model**, and evaluating the trained model on **real data**.
