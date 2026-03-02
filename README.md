@@ -1,6 +1,6 @@
-# Synthetic Imaging Data Pipeline for Segmentation Training
+# Synthetic Cells by Sampling: Full Pipeline for Cell Segmentation
 
-This repository provides a complete pipeline for generating **synthetic imaging data**, preparing **training datasets**, training a **segmentation model**, and evaluating the trained model on **real data**.
+This repository provides a complete pipeline for generating **synthetic training images of A549 cells with branching filopodia**, training a **segmentation model**, and evaluating the trained model on **real data**.
 The goal is to leverage synthetic data to improve segmentation performance on real-world images.
 
 The pipeline is organized into **four main execution stages**, each controlled by a Bash script and parameterized via configuration files.
@@ -11,16 +11,24 @@ The pipeline is organized into **four main execution stages**, each controlled b
 
 ```
 .
-├── data/               # Raw and intermediate data (synthetic + real)
-├── train_data/         # Processed datasets used for model training
-├── main/               # All executable scripts (run commands from here)
+├── Fluo-C3DH-A549/               # Test data from Cell Tracking Challenge
+├── Fluo-C3DH-A549-train/         # Annotated training data from Cell Tracking Challenge
+├── main/                         # All executable scripts (run commands from here)
 │   ├── scripts/
 │   │   └── default/
-│   │       ├── Sampling.sh
-│   │       ├── TrainData.sh
-│   │       ├── ModelTrain.sh
-│   │       └── RunFinal.sh
-│   ├── config/         # Configuration files for each stage
+│   │       ├── Sampling.sh       # Sample intensities from annotated data (eg. Fluo-C3DH-A549-train/)
+│   │       ├── ModelTrain.sh     # Train segmentation model on dataset stored in synthetic_data/
+│   │       ├── RunFinal.sh       # Run inference on real data (Fluo-C3DH-A549/ or Fluo-C3DH-A549-train/)
+│   │       └── ...
+│   │   └── A549/
+│   │       ├── TrainData.sh      # Generate dataset with synthetic images with labels
+│   │       └── ...
+│   ├── config/                   # Configuration files for each stage
+│   ├── data_generator/           # Scripts for sampling, and shape + image generation
+│   ├── model_codes/              # Scripts for model training and inference
+│   ├── synthetic_data/           # Where synthetic training images are stored
+│   ├── models/                   # Where trained models are stored
+│   ├── utils/
 │   └── ...
 ```
 
@@ -39,7 +47,7 @@ The pipeline is organized into **four main execution stages**, each controlled b
 The full workflow consists of the following steps:
 
 1. **Synthetic Data Sampling**
-2. **Training Data Preparation**
+2. **Training Data Generation**
 3. **Model Training**
 4. **Final Evaluation / Inference**
 
