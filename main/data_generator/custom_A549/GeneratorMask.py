@@ -133,7 +133,7 @@ for i in tqdm(range(args.N), desc='Generating Image Masks'):
         cell_type = 'WT'
         n_thick_branches = 0
         n_long_thin_branches = 0
-        n_short_thin_branches = int(1 + 3*np.random.rand())
+        n_short_thin_branches = int(1 + 4*np.random.rand())
 
     elif x == 1:
         cell_type = 'OE'

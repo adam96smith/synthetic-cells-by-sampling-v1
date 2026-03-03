@@ -34,7 +34,7 @@ training:
 
 evaluation:
   STEP_SIZE: 100
-  BURN_IN: 5000
+  BURN_IN: 25000
   EVAL_DATA: 'CTC'
   EVAL_TYPE: 'maximise'
   EVAL_TARGET: 0.99

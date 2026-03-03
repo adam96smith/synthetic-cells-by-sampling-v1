@@ -112,7 +112,7 @@ else:
 ## Load Model
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
-    model = torch.load(f'{args.model_dir}{args.model_name}/{args.model_version}', map_location=device)
+    model = torch.load(f'{args.model_dir}{args.model_name}/{args.model_version}', map_location=device, weights_only=False) # load entire model
 model.eval()
 
 ### Evaluate model on real training data

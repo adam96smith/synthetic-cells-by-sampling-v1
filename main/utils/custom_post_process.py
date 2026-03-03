@@ -279,18 +279,18 @@ def custom_post_process(prediction, mode='default'):
         output = remove_small_objects(output, 50)
         output = label(output)[0][np.newaxis]
 
-    elif mode in ['A549','A549-SIM']:
+    # elif mode in ['A549','A549-SIM']:
     
-        filled = binary_fill_holes(prediction[0] > .5)
+    #     filled = binary_fill_holes(prediction[0] > .5)
 
-        # remove objects 5 mu from largest connected region
-        labelled_output = label(filled)[0]
-        N = np.argmax(np.bincount(labelled_output.flatten())[1:]) + 1
-        dist_map = distance_transform_edt(~(labelled_output == N), sampling=(1, .126, .126))
+    #     # remove objects 5 mu from largest connected region
+    #     labelled_output = label(filled)[0]
+    #     N = np.argmax(np.bincount(labelled_output.flatten())[1:]) + 1
+    #     dist_map = distance_transform_edt(~(labelled_output == N), sampling=(1, .126, .126))
 
-        output = (filled * (dist_map<5))[np.newaxis]
+    #     output = (filled * (dist_map<5))[np.newaxis]
 
-    elif mode == 'A549_OLD':
+    elif mode == 'A549':
         ''' Old Method for A549 Dataset '''
         filled = fill_holes_by_slice(prediction[0] > .5)
 

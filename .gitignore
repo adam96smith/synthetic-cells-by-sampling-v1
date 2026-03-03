@@ -1,4 +1,5 @@
 Fluo-C3DH-A549-train/*
+Fluo-C3DH-A549/*
 !Fluo-C3DH-A549-train/.gitkeep
 !Fluo-C3DH-A549/.gitkeep
 main/synthetic_data/*
