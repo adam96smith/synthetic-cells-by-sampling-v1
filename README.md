@@ -56,6 +56,15 @@ Each step:
 * Is executed via a Bash script
 * Loads parameters from configuration files located in `main/config/`
 * Produces outputs that feed into the next stage
+---
+
+## 0. Requirements
+
+Use `uv` to install all dependencies.
+
+```
+uv pip install -r requirements.txt
+```
 
 ---
 
