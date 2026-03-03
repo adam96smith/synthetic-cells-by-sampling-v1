@@ -69,35 +69,25 @@ bash scripts/default/Sampling.sh
 
 ### Purpose
 
-Generates synthetic imaging data and corresponding segmentation labels.
-This step controls the **diversity**, **complexity**, and **distribution** of the synthetic dataset.
+Using ground truth annotations, the intensity values from real images are grouped based on intervals of a distance map.
+The formatted data is used to texture synthetic images (stored in `data_generator/sampled_data/data_A549/`)
 
-### Key Outputs
-
-* Synthetic images
-* Ground-truth segmentation masks
-* Metadata describing generation parameters
-
-### Configuration Files
+### Parameters
 
 Located in:
 
 ```
-main/config/
+main/config/global_parameters.yaml
 ```
 
-#### Parameter Effects (Examples)
+| Parameter      | Description                          |
+| -------------- | ------------------------------------ |
+| `SAMPLING`     | Voxel size in $\mu m$                |
+| `DX`           | Distance interval width              |
+| `MIN_DIST`     | Minimum distance sampled             |
+| `MAX_DIST`     | Maximum distance sampled             |
 
-| Parameter      | Description                          | Effect on Output               |
-| -------------- | ------------------------------------ | ------------------------------ |
-| `num_samples`  | Number of synthetic images generated | Controls dataset size          |
-| `noise_level`  | Amount of simulated noise            | Affects realism and robustness |
-| `object_count` | Number of objects per image          | Controls scene complexity      |
-| `random_seed`  | Seed for random sampling             | Ensures reproducibility        |
-
-> Use this section to briefly document **how each parameter influences the generated images**.
-
----
+**Recommended**: DX should be no lower than 2x the in-plane sampling.
 
 ## 2. Training Data Preparation
 
@@ -109,32 +99,28 @@ bash scripts/default/TrainData.sh
 
 ### Purpose
 
-Transforms raw synthetic data into a format suitable for model training.
-This may include resizing, normalization, augmentation, and dataset splitting.
+This script runs GeneratorMask.py to get cell shapes, GeneratorImage.py to get synthetic images and GeneratorCurveSeg.py for curvature mask.
+All images are stored in `synthetic_data/A549/`, with images inside `custom_texture/`. 
+**Note:**: Custom script for A549 cells is 'data_generator/custom_A549/GeneratorMask.py`, the alternative in `default/` generates generic masks with specified shape.
 
-### Key Outputs
 
-* Processed images
-* Processed segmentation masks
-* Train / validation splits
-
-### Configuration Files
+### Parameters
 
 Located in:
 
 ```
-main/config/
+main/config/synth_parameters.yaml
 ```
 
-#### Parameter Effects (Examples)
+| Parameter        | Description                                      |
+| ---------------- | ------------------------------------------------ |
+|  `IMAGE_SIZE`    | Size of synthetic images                         |
+|  `DISTMAP_BLUR`  | If True, blur the distance map used in sampling  |
+|  `DISTMAP_SIG`   | Sigma used to blur distances (**in $\mu m$**)    |
+|  `GAUSSIAN_BLUR` | If True, apply blur to the final image           |
+|  `GAUSSIAN_SIG`  | Sigma used to blur image (**in pixels**)         |
 
-| Parameter      | Description                  | Effect on Output               |
-| -------------- | ---------------------------- | ------------------------------ |
-| `image_size`   | Target resolution            | Affects model input dimensions |
-| `augmentation` | Enable/disable augmentations | Improves generalization        |
-| `train_split`  | Training set fraction        | Controls validation size       |
-
----
+**Note:** Applying a blur to the distance map reduces the block effect caused by sampling at distance intervals.
 
 ## 3. Model Training
 
@@ -146,7 +132,7 @@ bash scripts/default/ModelTrain.sh
 
 ### Purpose
 
-Trains the segmentation model using the prepared synthetic dataset.
+Trains the segmentation model using the synthetic dataset.
 
 ### Key Outputs
 
@@ -154,24 +140,24 @@ Trains the segmentation model using the prepared synthetic dataset.
 * Training logs
 * Loss and metric curves
 
-### Configuration Files
+### Parameters
 
 Located in:
 
 ```
-main/config/
+main/config/model_train.yaml
 ```
 
-#### Parameter Effects (Examples)
+| Parameter       | Description                                                                        | 
+| --------------- | ---------------------------------------------------------------------------------- | 
+| `PATCH_SHAPE'   | Size of patches sampled during training                                            |
+| `WEIGHTS'       | Weights for custom loss function (Background, Foreground, high Curvature Regions)  |
+| `STEP_SIZE'     | Number of training iterations between **evaluation** on real data                  | 
+| `BURN_IN'       | Number of training iterations before first **evaluation**                          |
+| `EVAL_PATIENCE' | Number of evaluations averaged to assess training progress                         | 
+| `EVAL_TARGET'   | Target IoU score average that prompts termination of model training                |
 
-| Parameter       | Description           | Effect on Output                 |
-| --------------- | --------------------- | -------------------------------- |
-| `learning_rate` | Optimizer step size   | Affects convergence stability    |
-| `batch_size`    | Samples per iteration | Impacts memory usage and speed   |
-| `num_epochs`    | Training duration     | Controls final model performance |
-| `loss_function` | Loss definition       | Influences segmentation behavior |
-
----
+**Note:** Default `EVAL_TARGET' set high so training not terminated.
 
 ## 4. Final Evaluation / Inference
 
@@ -183,29 +169,18 @@ bash scripts/default/RunFinal.sh
 
 ### Purpose
 
-Runs the trained model on **real data** or held-out datasets to evaluate performance and generate final predictions.
+Runs the trained model on **real data** to generate final predictions.
 
-### Key Outputs
+#### Args (see RunFinal.sh)
 
-* Predicted segmentation masks
-* Evaluation metrics
-* Visualization outputs (optional)
+| Parameter         | Description                                                              | 
+| ----------------- | ------------------------------------------------------------------------ |
+| `VERSION`         | Specify the checkpoint to use for inference                              |
+| `TEST_DIR`        | Test directory in root folder (eg. `Fluo-C3Dh-A549/`)                    |
+| '--model-name'    | Model name (found in `models/`)                                          |
+| `--final`         | Prompts the script to save output compatible for Cell Tracking Challenge | 
 
-### Configuration Files
-
-Located in:
-
-```
-main/config/
-```
-
-#### Parameter Effects (Examples)
-
-| Parameter         | Description              | Effect on Output          |
-| ----------------- | ------------------------ | ------------------------- |
-| `checkpoint_path` | Model checkpoint to load | Selects trained model     |
-| `threshold`       | Segmentation threshold   | Controls mask sensitivity |
-| `output_format`   | Save format              | Affects downstream usage  |
+**Note:** Training script saves 3 model outputs: model.pt (final model), and model_peak.pt (peak evaluation score) and model_best.pt (peak moving average).
 
 ---
 
