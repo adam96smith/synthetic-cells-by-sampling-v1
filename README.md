@@ -206,6 +206,8 @@ Runs the trained model on **real data** to generate final predictions.
 ```bash
 cd main
 
+bash prepare_software.sh
+source synth-cell-env/bin/activate
 bash scripts/default/Sampling.sh
 bash scripts/default/TrainData.sh
 bash scripts/default/ModelTrain.sh
