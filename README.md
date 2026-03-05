@@ -60,7 +60,13 @@ Each step:
 
 ## 0. Requirements
 
-Use `uv` to install all dependencies.
+Execute the bash script for setting up the `synth-cell-env`:
+
+```
+bash prepare_software.sh
+```
+
+Alternatively, use `uv` to install all dependencies (much faster!).
 
 ```
 uv pip install -r requirements.txt
