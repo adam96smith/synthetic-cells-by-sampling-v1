@@ -32,14 +32,6 @@ The pipeline is organized into **four main execution stages**, each controlled b
 │   └── ...
 ```
 
-> **Important:**
-> All scripts must be executed **from the `main/` directory**, for example:
->
-> ```bash
-> cd main
-> bash scripts/default/Sampling.sh
-> ```
-
 ---
 
 ## Pipeline Overview
@@ -63,14 +55,18 @@ Each step:
 Execute the bash script for setting up the `synth-cell-env`:
 
 ```
+cd main
 bash prepare_software.sh
 ```
 
 Alternatively, use `uv` to install all dependencies (much faster!).
 
 ```
+cd main
 uv pip install -r requirements.txt
 ```
+
+**Important:** All scripts must be executed **from the `main/` directory**
 
 ---
 
