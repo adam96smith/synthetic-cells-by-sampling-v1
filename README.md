@@ -66,6 +66,12 @@ cd main
 uv pip install -r requirements.txt
 ```
 
+Then, activate the environment
+
+```
+source synth-cell-env/bin/activate
+```
+
 **Important:** All scripts must be executed **from the `main/` directory**
 
 ---
