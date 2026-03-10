@@ -50,19 +50,24 @@ Each step:
 * Produces outputs that feed into the next stage
 ---
 
-## 0. Requirements
+## 0. Installation
+
+Clone the repository into an arbitrary directory:
+
+```
+git clone https://github.com/adam96smith/synthetic-cells-by-sampling-v1.git
+cd synthetic-cells-by-sampling-v1/
+```
 
 Execute the bash script for setting up the `synth-cell-env`:
 
 ```
-cd main
 bash prepare_software.sh
 ```
 
 Alternatively, use `uv` to install all dependencies (much faster!).
 
 ```
-cd main
 uv pip install -r requirements.txt
 ```
 
@@ -73,6 +78,9 @@ source synth-cell-env/bin/activate
 ```
 
 **Important:** All scripts must be executed **from the `main/` directory**
+```
+cd main
+```
 
 ---
 
