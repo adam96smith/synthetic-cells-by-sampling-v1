@@ -13,7 +13,7 @@ python model_codes/default/ModelRun.py \
     --dataset-id $DATASET_NAME \
     --test-dir $TEST_DIR \
     --model-dir models/$DATASET_NAME/ \
-    --model-name test_model \
+    --model-name submitted_model \
     --model-version $VERSION \
     --final \
     --config config/$DATASET_NAME/model_train.yaml 
