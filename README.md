@@ -175,12 +175,12 @@ main/config/model_train.yaml
 
 | Parameter       | Description                                                                        | 
 | --------------- | ---------------------------------------------------------------------------------- | 
-| `PATCH_SHAPE'   | Size of patches sampled during training                                            |
-| `WEIGHTS'       | Weights for custom loss function (Background, Foreground, high Curvature Regions)  |
-| `STEP_SIZE'     | Number of training iterations between **evaluation** on real data                  | 
-| `BURN_IN'       | Number of training iterations before first **evaluation**                          |
-| `EVAL_PATIENCE' | Number of evaluations averaged to assess training progress                         | 
-| `EVAL_TARGET'   | Target IoU score average that prompts termination of model training                |
+| `PATCH_SHAPE`   | Size of patches sampled during training                                            |
+| `WEIGHTS`       | Weights for custom loss function (Background, Foreground, high Curvature Regions)  |
+| `STEP_SIZE`     | Number of training iterations between **evaluation** on real data                  | 
+| `BURN_IN`       | Number of training iterations before first **evaluation**                          |
+| `EVAL_PATIENCE` | Number of evaluations averaged to assess training progress                         | 
+| `EVAL_TARGET`   | Target IoU score average that prompts termination of model training                |
 
 **Note:** Default `EVAL_TARGET' set high so training not terminated.
 
@@ -202,10 +202,18 @@ Runs the trained model on **real data** to generate final predictions.
 | ----------------- | ------------------------------------------------------------------------ |
 | `VERSION`         | Specify the checkpoint to use for inference                              |
 | `TEST_DIR`        | Test directory in root folder (eg. `Fluo-C3Dh-A549/`)                    |
-| '--model-name'    | Model name (found in `models/`)                                          |
+| `--model-name`    | Model name (found in `models/`)                                          |
 | `--final`         | Prompts the script to save output compatible for Cell Tracking Challenge | 
 
 **Note:** Training script saves 3 model outputs: model.pt (final model), and model_peak.pt (peak evaluation score) and model_best.pt (peak moving average).
+
+### Run Submitted Model
+
+Alternatively, the following command runs the exact model that was submitted to the Cell Tracking Challenge:
+
+```bash
+bash scripts/default/RunFinal_Submitted.sh
+```
 
 ---
 
